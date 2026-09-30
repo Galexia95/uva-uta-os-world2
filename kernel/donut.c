@@ -26,9 +26,9 @@ static inline void setpixel(unsigned char *buf, int x, int y, int pit, PIXEL p) 
 }
 
 // canvas layout, 2x2
-//static const int xoff[] = {0,NN/2,0,NN/2};
-//static const int yoff[] = {0,0,NN/2,NN/2};
-static const int xoff[] = {
+static const int xoff[] = {0,NN/2,0,NN/2};
+static const int yoff[] = {0,0,NN/2,NN/2};
+/*static const int xoff[] = {
     0, NN/5, 2*NN/5, 3*NN/5, 4*NN/5,
     0, NN/5, 2*NN/5, 3*NN/5, 4*NN/5,
     0, NN/5, 2*NN/5, 3*NN/5, 4*NN/5,
@@ -41,11 +41,11 @@ static const int yoff[] = {
     2*NN/5, 2*NN/5, 2*NN/5, 2*NN/5, 2*NN/5,
     3*NN/5, 3*NN/5, 3*NN/5, 3*NN/5, 3*NN/5,
     4*NN/5, 4*NN/5, 4*NN/5, 4*NN/5, 4*NN/5
-};
+};*/
 _Static_assert(N_DONUTS <= NELEM(xoff));
-enum {K=1}; // donut scale factor, see code below
-_Static_assert(80*K  <= NN/5); // columns
-_Static_assert(22*K*2  <= NN/5); // rows
+enum {K=4}; // donut scale factor, see code below
+_Static_assert(80*K  <= NN/2); // columns
+_Static_assert(22*K*2  <= NN/2); // rows
 
 static char b[N_DONUTS][1760];        // text buffer (W 80 H 22?
 static signed char z[N_DONUTS][1760]; // z buffer
