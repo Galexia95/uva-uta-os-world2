@@ -16,7 +16,7 @@
 #define NR_MMS              NR_TASKS
 
 #define NN 640 // entire canvas dimension. NN by NN. cf donut.c
-#define N_DONUTS 9      // max # of donuts
+#define N_DONUTS 25      // max # of donuts
 //#define N_DONUTS 4      // max # of donuts. slow w/o cache. project idea: compare the speed vs w/cache
 
 #define DEV_RAMDISK     1       // ramdisk
