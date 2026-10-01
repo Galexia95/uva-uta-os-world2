@@ -313,6 +313,9 @@ static int wakeup_nolock(void *chan) {
         if (p->state == TASK_UNUSED) continue; 
         if (p->state == TASK_SLEEPING && p->chan == chan) {            
             /* STUDENT: TODO: your code here */
+            p->state = TASK_RUNNABLE;
+            p->chan = 0;
+            cnt++;
             I("wakeup cpu%d chan=%lx pid %d", cpuid(),
                 (unsigned long)p->chan, p->pid);
         }
@@ -367,6 +370,8 @@ void sleep(void *chan, struct spinlock *lk) {
 
     /* Go to sleep. */
     /* STUDENT: TODO: your code here */
+    p->state = TASK_SLEEPING;
+    p->chan = chan;
 
     /* although the task has not used up the current tick, bill it regardless.
     thus this task will be disadvantaged in future scheduling  */
@@ -376,7 +381,7 @@ void sleep(void *chan, struct spinlock *lk) {
     know exists for sure. the idle task will return from the schedule() and 
     rls sched_lock. the next timertick will call schedule() and switch 
     to a normal task (if any)  */
-struct task_struct *idle = 0; /* STUDENT: TODO: replace this */
+struct task_struct *idle = idle_tasks[cpuid()]; /* STUDENT: TODO: replace this */
     mycpu()->proc = idle; 
     cpu_switch_to(p, idle);  
     
@@ -503,6 +508,9 @@ void exit_process(int status) {
     know exists for sure. the next timertick will call schedule() and switch 
     to a normal task (if any) */
     /* STUDENT: TODO: your code here */
+    struct task_struct *idle = idle_tasks[cpuid()];
+    mycpu()->proc = idle;
+    cpu_switch_to(p, idle);
 
     /* the "switch-to" task will resume from the schedule()'s exit path, which
     will release sched_lock after sched_lock is released, the parent can proceed

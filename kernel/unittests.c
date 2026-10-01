@@ -214,12 +214,18 @@ static void do_write(const char *str, int n) {
     while (i<n) {
         if (nwrite == nread + NSIZE) { // pipe write full
             /* STUDENT: TODO: your code here */
+            wakeup(&pipebuf);
+            sleep(&pipebuf, &testlock);
         } else {
             /* STUDENT: TODO: your code here */
+            pipebuf[nwrite % NSIZE] = str[i];
+            nwrite++;
+            i++;
         }
     }
     // done writing n bytes, buf not full, wakeup reader anyway
     /* STUDENT: TODO: your code here */
+    wakeup(&pipebuf);
     release(&testlock); 
 }
 
@@ -233,14 +239,22 @@ static int do_read(char *str, int n) {
     acquire(&testlock); 
     while (nread == nwrite) {   // pipe empty
         /* STUDENT: TODO: your code here */
+        sleep(&pipebuf, &testlock);
     }
     for (i=0; i<n; i++) {
         // pipe empty
             /* STUDENT: TODO: your code here */
+            if(nread == nwrite)
+            {
+                break;
+            }
+            str[i] = pipebuf[nread % NSIZE];
+            nread++;
         // read out
         /* STUDENT: TODO: your code here */
     }
     /* STUDENT: TODO: your code here */
+    wakeup(&pipebuf);
     release(&testlock); 
     return i; 
 }

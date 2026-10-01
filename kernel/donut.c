@@ -93,8 +93,13 @@ static PIXEL int2rgb (int value);
 // Q7: quest: "donuts in sync"
 void donut_pixel(int idx) {
     int sA = 1024, cA = 0, sB = 1024, cB = 0, _;
-    
+    int count = 0;
     while (1) {
+        count++;
+        if(count > 600 && idx == 0)
+        {
+            exit_process(0);
+        }
         memset(b[idx], 0, 1760);  // text buffer 0: black bkgnd
         memset(z[idx], 127, 1760); // z buffer
         int sj = 0, cj = 1024;
