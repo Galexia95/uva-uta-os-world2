@@ -131,8 +131,8 @@ void donut_pixel(int idx) {
             }
             R(9, 7, cj, sj) // rotate j
         }
-        R(5, 7, cA, sA);
-        R(5, 8, cB, sB);
+        R(5 * (idx + 1), 7, cA, sA);
+        R(5 * (idx + 1), 8, cB, sB);
 
         // screen_clear(idx);   // not needed
         int offsetx = xoff[idx], offsety = yoff[idx]; 
@@ -161,6 +161,7 @@ void donut_pixel(int idx) {
             }
         }
         /* STUDENT: TODO: your code here */
+        yield();
     }
 }
 

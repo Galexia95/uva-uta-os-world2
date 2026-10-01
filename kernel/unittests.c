@@ -308,8 +308,8 @@ void kern_task_donut(int idx) {
         get_el(), myproc()->pid, idx);
     // exp: diff proirities --> donuts will turn at diff rates
 	/* STUDENT: TODO: your code here */
-    myproc()->priority = (idx + 1) * 10;
-    myproc()->credits = myproc()->priority;
+    //myproc()->priority = (idx + 1) * 20;
+    //myproc()->credits = myproc()->priority;
     while(1)
     {
         donut(idx);
